@@ -1,14 +1,17 @@
 
-# Void-Astro
+# Art Void
 
-> 🧑‍🚀 Void-Astro is a minimalistic blog starter template designed for developers and writers who appreciate simplicity and elegance. Built with [Astro](https://astro.build/), this template leverages the power of [TailwindCSS](https://tailwindcss.com/) for styling and comes with a built-in dark mode, making it aesthetically pleasing and easy on the eyes.
+> 🎨 Art Void is a minimalistic theme for art portfolio + blog sites. Built with [Astro](https://astro.build/) and [TailwindCSS](https://tailwindcss.com/), it offers a clean, elegant canvas for artists and creators to showcase their work and share insights. Features a built-in dark mode for a refined viewing experience.
+
 
 ## Features
 
-- **Minimalistic Design.**
+- **Minimalistic Design**
+- **Portfolio & Blog Support**
 - **Dark Mode**
-- **Build with TailwindCSS**: 
+- **Built with TailwindCSS**
 - **Responsive**
+
 
 
 ## Getting Started
@@ -16,12 +19,15 @@
 1. Clone the repository:
 ```bash
 # Clone the repository
-git clone https://github.com/eAntillon/void-astro.git
-cd void-astro
-#  Install dependencies
+git clone https://github.com/Arsaev/art-void.git
+cd art-void
+# Install dependencies
 npm i
-#  Start the development server
+# Start the development server
 npm run dev
 ```
-![frame](https://github.com/user-attachments/assets/0ab4b7b7-6b20-4ae2-8266-aa029a503cf1)
+
+## Credits
+This project builds on [void-astro](https://github.com/eAntillon/void-astro)  
+Copyright (c) 2025 Erick Antillón(s) – Licensed under the MIT License.
 
