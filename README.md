@@ -30,6 +30,5 @@ npm run dev
 ```
 
 ## Credits
-This project builds on [void-astro](https://github.com/eAntillon/void-astro)  
-Copyright (c) 2025 Erick Antillón(s) – Licensed under the MIT License.
+This project was builds on top of [void-astro](https://github.com/eAntillon/void-astro) byErick Antillón(s)
 
