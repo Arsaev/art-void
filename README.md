@@ -4,7 +4,7 @@
 > 🎨 Art Void is a minimalistic theme for art portfolio + blog sites. Built with [Astro](https://astro.build/) and [TailwindCSS](https://tailwindcss.com/), it offers a clean, elegant canvas for artists and creators to showcase their work and share insights. Features a built-in dark mode for a refined viewing experience.
 
 <!-- screenshot -->
-[Art Void Screenshot](https://github.com/Arsaev/art-void/blob/main/public/Screenshot1.png)
+![Art Void Screenshot](https://github.com/Arsaev/art-void/blob/main/public/Screenshot1.png)
 
 ## Features
 
