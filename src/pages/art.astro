@@ -4,7 +4,6 @@ import Footer from "../components/Footer.astro";
 import BaseHead from "../components/BaseHead.astro";
 import { getCollection } from 'astro:content';
 import ArtGallery from '../components/ArtGallery.astro';
-import { Debug } from "astro:components";   
 const artItems = await getCollection('art');
 
 const mediums = Array.from(new Set(artItems.map(a => a.data.medium).filter(Boolean)));
