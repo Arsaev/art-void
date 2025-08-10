@@ -6,14 +6,10 @@ import tailwind from '@astrojs/tailwind'
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://magoarsaev.com/art-void',
+    site: 'https://arsaev.github.io/art-void',
     integrations: [mdx(), sitemap(), tailwind()],
     markdown: {
         shikiConfig: {
-          // Choose from Shiki's built-in themes (or add your own)
-          // https://shiki.style/themes
-          // Alternatively, provide multiple themes
-          // See note below for using dual light/dark themes
           themes: {
             light: 'poimandres',
             dark: 'catppuccin-latte',
