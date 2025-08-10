@@ -1,0 +1,61 @@
+---
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import BaseHead from "../../components/BaseHead.astro";
+import { getCollection } from 'astro:content';
+import ArtGallery from '../../components/ArtGallery.astro';
+function slugify(str) {
+  return str ? str.toLowerCase().replace(/\s+/g, '-') : '';
+}
+
+const artItems = await getCollection('art');
+const mediums = Array.from(new Set(artItems.map(a => a.data.medium).filter(Boolean)));
+mediums.unshift('All');
+
+export async function getStaticPaths() {
+  const items = await getCollection('art');
+  const mediumsSet = new Set(items.map(a => a.data.medium).filter(Boolean));
+  const paths = Array.from(mediumsSet).map(m => ({ params: { medium: m ? m.toLowerCase().replace(/\s+/g, '-') : '' } }));
+  return paths;
+}
+
+const { medium } = Astro.params;
+const selectedMedium = artItems.find(a => slugify(a.data.medium) === medium)?.data.medium || 'All';
+
+const filteredArt = selectedMedium === 'All'
+  ? artItems
+  : artItems.filter(a =>
+      a.data.medium &&
+      slugify(a.data.medium) === medium
+    );
+
+filteredArt.sort((a, b) => {
+  if (a.data.year !== b.data.year) return b.data.year - a.data.year;
+  return b.data.month - a.data.month;
+});
+---
+<html lang="en">
+  <head>
+    <BaseHead title="Art Gallery" description="Browse artworks by category and flair." />
+  </head>
+  <body class="w-full max-w-screen-md mx-auto my-4 dark:bg-neutral-800 dark:text-neutral-300 transition-colors duration-300">
+    <Header />
+    <main class="flex flex-col gap-8 px-4 md:px-0">
+      <section class="mb-8">
+        <h1 class="text-3xl font-bold mb-4">Art Categories</h1>
+        <ul class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {mediums.map(m => (
+            <li>
+              <a href={slugify(m) === 'all' ? '/art' : `/art/${slugify(m)}`}
+                class={`block p-3 rounded bg-gray-100 dark:bg-neutral-700 hover:bg-gray-200 dark:hover:bg-neutral-600 transition${selectedMedium === m ? ' ring-2 ring-blue-500' : ''}`}>
+                {m}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+      <ArtGallery artItems={filteredArt} />
+    </main>
+    <Footer />
+  </body>
+</html>

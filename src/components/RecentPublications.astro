@@ -8,8 +8,8 @@ let numberOfPostsToDisplay = 3;
 let recentPosts = posts.slice(0, numberOfPostsToDisplay);
 ---
 
-<div class="px-4 md:px-16 flex flex-col gap-4 mt-16">
-  <h3 class="font-medium text-base">Recent Publications</h3>
+<div class="px-4 md:px-0 flex flex-col gap-4 mt-16">
+  <h2 class="text-3xl font-bold mb-4">Recent Publications</h2>
   {
     recentPosts.map((post) => (
       <div class="flex gap-2 justify-between border-b pb-4">

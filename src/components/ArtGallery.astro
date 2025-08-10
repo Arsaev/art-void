@@ -1,0 +1,85 @@
+---
+const { artItems } = Astro.props;
+---
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="art-gallery">
+  {artItems.map(art => (
+    <div class="relative group">
+      <img src={art.data.heroImage} alt={art.data.name} class="w-full h-auto object-contain rounded shadow-lg cursor-pointer art-image" loading="lazy" data-art={JSON.stringify(art.data)} />
+      <div class="mt-2">
+        <h2 class="text-xl font-semibold">{art.data.name}</h2>
+        <p class="text-sm text-gray-500">{art.data.medium} • {art.data.year}/{art.data.month}</p>
+        <p class="text-md font-semibold">{art.data.status}</p>
+ 
+      </div>
+    </div>
+  ))}
+</section>
+
+<div id="softbox" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 py-4 md:py-0 hidden">
+  <div class="bg-white dark:bg-neutral-900 rounded-lg shadow-2xl flex flex-col md:flex-row w-11/12 max-w-5xl overflow-auto" style="max-height: 95vh;">
+    <div class="md:w-3/4 w-full p-4 flex items-center justify-center">
+      <img id="softbox-img" src="" alt="" class="w-auto h-auto object-contain rounded" style="max-height: 90vh; max-width: 100%;" />
+    </div>
+    <div class="md:w-1/4 w-full p-6 flex flex-col gap-2">
+      <button class="self-end text-2xl" id="softbox-close">&times;</button>
+      <h2 class="text-2xl font-bold mb-2" id="softbox-name"></h2>
+      <p><strong>Medium:</strong> <span id="softbox-medium"></span></p>
+      <p><strong>Dimensions:</strong> <span id="softbox-dimensions"></span></p>
+      <p><strong>Date:</strong> <span id="softbox-date"></span></p>
+      <p><strong>Author:</strong> <span id="softbox-author"></span></p>
+      <p id="softbox-status" class="font-semibold"></p>
+      <p class="mt-4" id="softbox-text"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('.art-image');
+    const softbox = document.getElementById('softbox');
+    const closeBtn = document.getElementById('softbox-close');
+    const img = document.getElementById('softbox-img');
+    const name = document.getElementById('softbox-name');
+    const medium = document.getElementById('softbox-medium');
+    const dimensions = document.getElementById('softbox-dimensions');
+    const date = document.getElementById('softbox-date');
+    const author = document.getElementById('softbox-author');
+    const text = document.getElementById('softbox-text');
+    const status = document.getElementById('softbox-status');
+
+    images.forEach(image => {
+      image.onclick = () => {
+        const data = JSON.parse(image.getAttribute('data-art'));
+        img.src = data.heroImage;
+        img.alt = data.name;
+        name.textContent = data.name;
+        medium.textContent = data.medium;
+        dimensions.textContent = data.dimensions;
+        date.textContent = `${data.year}/${data.month}`;
+        author.textContent = data.author;
+        text.textContent = data.text;
+        if (status) {
+          if (data.status) {
+            status.textContent = data.status;
+            status.style.display = '';
+          } else {
+            status.textContent = '';
+            status.style.display = 'none';
+          }
+        }
+        softbox.classList.remove('hidden');
+      };
+    });
+    closeBtn.onclick = () => {
+      softbox.classList.add('hidden');
+    };
+    // Close softbox if click away
+    if (softbox) {
+      softbox.addEventListener('click', (e) => {
+        if (e.target === softbox) {
+          softbox.classList.add('hidden');
+        }
+      });
+    }
+  });
+</script>

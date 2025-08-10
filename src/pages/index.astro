@@ -4,6 +4,24 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import RecentPublications from "../components/RecentPublications.astro";
+import { getCollection } from 'astro:content';
+import ArtGallery from '../components/ArtGallery.astro';
+const artItems = await getCollection('art');
+
+function slugify(str) {
+  return str ? str.toLowerCase().replace(/\s+/g, '-') : '';
+}
+const selectedMedium = 'All';
+const mediums = Array.from(new Set(artItems.map(a => a.data.medium).filter(Boolean)));
+mediums.unshift('All');
+
+artItems.sort((a, b) => {
+  if (a.data.year !== b.data.year) return b.data.year - a.data.year;
+  return b.data.month - a.data.month;
+});
+
+// short by 20 most recent
+artItems.splice(20);
 ---
 
 <!doctype html>
@@ -22,19 +40,30 @@ import RecentPublications from "../components/RecentPublications.astro";
       </div>
       <div class="w-full flex flex-col items-center gap-2.5 px-4 lg:px-0 mt-6">
         <img
-          src="/blog-placeholder-about.jpg"
+          src="/placeholder-about.jpg"
           alt="Artistic inspiration"
         />
+        
         <p class="italic text-xs text-gray-600 dark:text-neutral-400">
-          Photo by <a
-            href="https://unsplash.com/es/@niklasjonasson?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
-            >Niklas Jonasson</a
-          > on <a
-            href="https://unsplash.com/es/fotos/un-cuerpo-de-agua-con-arboles-en-el-fondo-j_WW0u2yYAE?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"
-            >Unsplash</a
-          >
+         Photo by <a href="https://unsplash.com/@kharaoke?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Khara Woods</a> on <a href="https://unsplash.com/photos/assorted-color-paint-brush-on-brown-wooden-table-top-KR84RpMCb0w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
         </p>
       </div>
+      <div class="px-4 md:px-0 mt-10">
+      <section class="mb-8">
+        <h2 class="text-3xl font-bold mb-4">Most recent art</h2>
+        <ul class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {mediums.map(m => (
+            <li>
+              <a href={slugify(m) === 'all' ? '/art' : `/art/${slugify(m)}`}
+                class={`block p-3 rounded bg-gray-100 dark:bg-neutral-700 hover:bg-gray-200 dark:hover:bg-neutral-600 transition${selectedMedium === m ? ' ring-2 ring-blue-500' : ''}`}>
+                {m}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+      <ArtGallery artItems={artItems} />
+    </div>
     <RecentPublications />
         </main>
     <Footer />
